@@ -1,6 +1,6 @@
 const db = require('../data/db-config')
 
-function getAllUsers() { return db('users') }
+function getAllUsers() { return db('users').select('username', 'user_id') }
 
 function findBy(filter) {
     return db("users").where(filter);
