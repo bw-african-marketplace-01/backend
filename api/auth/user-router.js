@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const User = require('./user-model')
 const {TOKEN_SECRET} = require('../secret/secret')
+const restricted = require('./restricted')
 
 // Generating our token
 function generateToken(user) {
@@ -15,7 +16,7 @@ function generateToken(user) {
   };
   return jwt.sign(payload, TOKEN_SECRET, options);
 }
-router.get('/', async (req, res, next) => {
+router.get('/', restricted, async (req, res, next) => {
     try{
         const users = await User.getAllUsers()
         res.status(200).json(users)
@@ -23,7 +24,7 @@ router.get('/', async (req, res, next) => {
         next(error)
     }
 })
-router.post('/register',  async (req, res, next) => {
+router.post('/register', async (req, res, next) => {
     try{
       let {username, password} = req.body;
       const otherAccount = await User.findBy({username})
@@ -62,14 +63,5 @@ router.post('/login', (req, res, next) => {
         })
         .catch(next)
 });
-
-// Validating User
-function validateUser(req, res, next) {
-  if(!req.body.username || !req.body.password) {
-    res.status(400).json({ message: 'username and password required'})
-  }else{
-    next()
-  }
-}
 
 module.exports = router;
