@@ -6,8 +6,21 @@ exports.up = async (knex) => {
       users.string('password', 200).notNullable()
       users.timestamps(false, true)
     })
+    .createTable('businesses', (tbl) => {
+      tbl.increments('business_id')
+      tbl.string('name', 32)
+      tbl.integer('user_id')
+        .unsigned()
+        .notNullable()
+        .references('user_id')
+        .inTable('users')
+        .onDelete("CASCADE")
+        .onUpdate("CASCADE");
+    })
 }
 
 exports.down = async (knex) => {
-  await knex.schema.dropTableIfExists('users')
+  await knex.schema
+    .dropTableIfExists('businesses')
+    .dropTableIfExists('users')
 }
