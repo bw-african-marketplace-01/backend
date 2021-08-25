@@ -9,18 +9,46 @@ exports.up = async (knex) => {
     .createTable('businesses', (tbl) => {
       tbl.increments('business_id')
       tbl.string('name', 32)
-      tbl.integer('user_id')
-        .unsigned()
-        .notNullable()
-        .references('user_id')
-        .inTable('users')
-        .onUpdate('CASCADE')
-        .onDelete('CASCADE')
+      tbl.integer('owner_id')
+          .unsigned()
+          .notNullable()
+          .references('user_id')
+          .inTable('users')
+          .onUpdate('CASCADE')
+          .onDelete('CASCADE')
     })
+    .createTable('items', (tbl) => {
+      tbl.increments('item_id')
+      tbl.string('category', 64).notNullable()
+      tbl.string('location', 128).notNullable()
+      tbl.string('name', 128).notNullable()
+      tbl.string('description', 256).notNullable()
+      tbl.integer('price').unsigned().notNullable()
+    })
+    .createTable('businesss_items', (tbl) => {
+      tbl.increments('business_items_id')
+      tbl.integer('business_id')
+          .unsigned()
+          .notNullable()
+          .references('business_id')
+          .inTable('businesses')
+          .onUpdate('CASCADE')
+          .onDelete('CASCADE')
+      tbl.integer('item_id')
+          .unsigned()
+          .notNullable()
+          .references('item_id')
+          .inTable('items')
+          .onUpdate('CASCADE')
+          .onDelete('CASCADE')
+    })
+    
 }
 
 exports.down = async (knex) => {
   await knex.schema
+    .dropTableIfExists('businesss_items')
+    .dropTableIfExists('items')
     .dropTableIfExists('businesses')
     .dropTableIfExists('users')
 }
