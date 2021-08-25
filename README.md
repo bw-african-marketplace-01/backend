@@ -6,5 +6,5 @@ Deployed on Heroku at https://bw-african-marketplace-backend.herokuapp.com/
 | [POST] /api/users/login | none | username, token | message, token | Nope |
 | [GET] /api/users | none | no | array -> username, user_id | yes |
 | [GET] /api/users/:id | id | no | username, user_id | yes |
-| [POST] /api/business | none | name, token | business_id, name, user_id | yes |
+| [POST] /api/business | none | name, token | name, owner_id | yes |
 
