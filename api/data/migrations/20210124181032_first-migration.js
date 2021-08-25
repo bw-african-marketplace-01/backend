@@ -14,8 +14,8 @@ exports.up = async (knex) => {
         .notNullable()
         .references('user_id')
         .inTable('users')
-        .onDelete("CASCADE")
-        .onUpdate("CASCADE");
+        .onUpdate('CASCADE')
+        .onDelete('CASCADE')
     })
 }
 
