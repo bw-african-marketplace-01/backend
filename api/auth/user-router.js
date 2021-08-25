@@ -8,7 +8,7 @@ const restricted = require('./restricted')
 // Generating our token
 function generateToken(user) {
   const payload = {
-    subject: user.id,
+    user_id: user.user_id,
     username: user.username,
   };
   const options = {

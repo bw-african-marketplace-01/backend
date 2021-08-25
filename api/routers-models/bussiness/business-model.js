@@ -9,10 +9,7 @@ function findById(id){
 }
 
 async function add(business) {
-  // WITH POSTGRES WE CAN PASS A "RETURNING ARRAY" AS 2ND ARGUMENT TO knex.insert/update
-  // AND OBTAIN WHATEVER COLUMNS WE NEED FROM THE NEWLY CREATED/UPDATED RECORD
-  // UNLIKE SQLITE WHICH FORCES US DO DO A 2ND DB CALL
-  const [newUserObject] = await db('businesses').insert({name: business.name, user_id: business.user_id}, ['business_id', 'name', 'user_id'])
+  const [newUserObject] = await db('businesses').insert({name: business.name, owner_id: business.owner_id}, ['business_id', 'name', 'owner_id'])
   return newUserObject // { business_id: 7, name: 'foo', user_id: '2' }
 }
 function findUser(filter) {
