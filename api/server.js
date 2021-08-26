@@ -8,7 +8,7 @@ const restricted = require('./auth/restricted')
 // Routers
 const userRouter = require('./auth/user-router')
 const businessRouter = require('./routers-models/bussiness/business-router')
-const itemsRouter = require('./routers-models/items/items-router')
+const itemsRouter = require('./routers-models/Items/items-router')
 
 // Server uses
 server.use(express.json())
