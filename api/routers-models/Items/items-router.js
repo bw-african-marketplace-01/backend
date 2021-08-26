@@ -1,8 +1,8 @@
 const router = require('express').Router()
 const Items = require('./items-model')
-const {validateItems} = require('./middleware')
+const {validateItems, validateId} = require('./middleware')
 
-router.post('/', validateItems, async (req, res, next) => {
+router.post('/', validateItems, validateId, async (req, res, next) => {
     try{
         const [newItem] = await Items.createItem(req.body)
         res.status(201).json(newItem)
